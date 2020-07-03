@@ -1,5 +1,7 @@
 import { Component, ViewChild, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',

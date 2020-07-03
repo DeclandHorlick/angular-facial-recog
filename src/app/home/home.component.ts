@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import {Router} from  '@angular/router'
 import { HttpClient } from '@angular/common/http';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
+import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 
 
 @Component({
@@ -11,6 +14,56 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent{
 
   constructor(private route:Router,private http:HttpClient ) { }
+
+  //let img = new Image();
+  public webcamImage: WebcamImage = null;
+  private trigger: Subject<void> = new Subject<void>();
+  public pictureTaken = new EventEmitter<WebcamImage>();
+  public errors: WebcamInitError[] = [];
+  public showWebcam = true;
+  file: File
+      signupFile: File
+      username: string ="";
+      emailAdr: string="";
+      password: string="";
+      loginResponse: string;
+
+
+
+  public triggerSnapshot(): void {
+    this.trigger.next();
+
+  }
+  public handleImage(webcamImage: WebcamImage): void {
+  console.info('received webcam image', webcamImage.imageAsBase64);
+  //this.pictureTaken.emit(webcamImage);
+  //this.webcamImage = webcamImage
+  //img.crossOrigin = 'Anonymous';
+  //img.src = webcamImage;
+  var fd = new FormData();
+          fd.append('imageFile', webcamImage.imageAsBase64);
+          fd.append('userId', this.username);
+        this.http.post<any>('http://localhost:8080/ca/facialRecognition', fd).subscribe(data => {
+          this.loginResponse = data.message;
+
+
+         if(this.loginResponse == 'Facial Recognition Successful'){
+         alert(this.loginResponse)
+           this.route.navigate(['exammenu']);
+         }else {
+
+         alert(this.loginResponse)
+
+
+         }
+         })
+  }
+  public handleInitError(error: WebcamInitError): void {
+  this.errors.push(error);
+  }
+  public get triggerObservable(): Observable<void> {
+  return this.trigger.asObservable();
+  }
 
   ngOnInit() {
    const signUpButton = document.getElementById('signUp');
@@ -34,12 +87,6 @@ export class HomeComponent{
 
 
     }
-    file: File
-    signupFile: File
-    username: string ="";
-    emailAdr: string="";
-    password: string="";
-    loginResponse: string;
 
 
    onSelectFile(event) {
@@ -67,24 +114,6 @@ export class HomeComponent{
     }
 
     login(){
-
-     var fd = new FormData();
-        fd.append('imageFile', this.file);
-        fd.append('userId', this.username);
-      this.http.post<any>('http://localhost:8080/ca/facialRecognition', fd).subscribe(data => {
-        this.loginResponse = data.message;
-
-
-       if(this.loginResponse == 'Facial Recognition Successful'){
-       alert(this.loginResponse)
-         this.route.navigate(['exammenu']);
-       }else {
-
-       alert(this.loginResponse)
-
-
-       }
-       })
 
   }
 

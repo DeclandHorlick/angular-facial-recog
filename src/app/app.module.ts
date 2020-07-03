@@ -9,6 +9,7 @@ import { ExamcompleteComponent } from './examcomplete/examcomplete.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {WebcamModule} from 'ngx-webcam';
+import { CameraComponent } from './camera/camera.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {WebcamModule} from 'ngx-webcam';
     ExammenuComponent,
     HomeComponent,
     ExampageComponent,
-    ExamcompleteComponent
+    ExamcompleteComponent,
+    CameraComponent
   ],
   imports: [
     BrowserModule,
