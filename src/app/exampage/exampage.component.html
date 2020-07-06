@@ -8,12 +8,18 @@
       <li class="active"><a href="#">Home</a></li>
       <li><a href="#">Profile</a></li>
       <li><a href="#">Exam List</a></li>
+        <webcam [height]="175" [width]="175" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                (initError)="handleInitError($event)"></webcam>
+        <br/>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
     </ul>
+
   </div>
+
 </nav>
+
 <form>
 
   <fieldset>
@@ -47,3 +53,4 @@
 
   <button (click)="completeExam()">Submit Answers</button>
 </form>
+
