@@ -8,6 +8,7 @@ import { ExampageComponent } from './exampage/exampage.component';
 import { ExamcompleteComponent } from './examcomplete/examcomplete.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import {WebcamModule} from 'ngx-webcam';
 
 
 @NgModule({
@@ -16,12 +17,13 @@ import { FormsModule } from '@angular/forms';
     ExammenuComponent,
     HomeComponent,
     ExampageComponent,
-    ExamcompleteComponent
+    ExamcompleteComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    WebcamModule,
     RouterModule.forRoot([
     { path: 'app', component: AppComponent },
     { path: '', pathMatch: 'full', component: HomeComponent },

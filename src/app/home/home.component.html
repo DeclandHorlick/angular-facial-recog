@@ -24,9 +24,17 @@
       <input id="username"  [(ngModel)]="username" [ngModelOptions]="{standalone: true}" type="text"  placeholder="Email" />
       <input type="password" placeholder="Password"/>
       <label>Capture or Select image for facial recognition</label>
-      <input type='file' (change)="onSelectFile($event)">
+      <!--<input type='file' (change)="onSelectFile($event)">-->
+      <!--div style="text-align:center">-->
+      <div>
+        <webcam [height]="275" [width]="275" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                (initError)="handleInitError($event)"></webcam>
+        <br/>
+        <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture"></div>
+        <!--<div class="actionBtn" (click)="showNextWebcam(true);" title="Switch Camera">🔁</div>-->
+      </div>
       <a>I Forgot my Password</a>
-      <button (click)="login()" class="si">Sign In
+      <button class="actionBtn" (click)="triggerSnapshot();" title="Take Picture" (click)="login()" class="si">Sign In
       </button>
     </form>
   </div>
